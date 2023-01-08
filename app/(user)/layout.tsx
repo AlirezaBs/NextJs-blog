@@ -11,8 +11,11 @@ export default function RootLayout({
       <html>
          <body>
             <Header />
-            <Banner />
-            {children}
+            <hr className="border-[#768791]" />
+            <div className="max-w-7xl mx-auto">
+               <Banner />
+               {children}
+            </div>
          </body>
       </html>
    )

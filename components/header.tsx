@@ -3,17 +3,20 @@ import Image from "next/image"
 
 function Header() {
    return (
-      <header className="flex items-center justify-between space-x-2 font-bold px-10 py-5 border-b-2 border-[#768791]">
+      <header className="max-w-7xl mx-auto flex items-center justify-between space-x-2 font-bold px-10 py-5">
          <div className="flex items-center space-x-2">
             <Link href="/" />
             <Image src="/siteLogo.png" width={100} height={100} alt="logo" />
          </div>
 
          <div>
-            <Link
+            <a
+               target="_blank"
                href="https://www.linkedin.com/in/alireza-babazadeh/"
                className="px-3 py-2 sm:px-5 sm:py-3 text-sm md:text-base text-white bg-[#0077b5] flex items-center rounded-full text-center"
-            >Connect me on Linkedn</Link>
+            >
+               Connect me on Linkedn
+            </a>
          </div>
       </header>
    )

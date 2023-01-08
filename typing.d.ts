@@ -56,6 +56,7 @@ interface Span {
 }
 
 interface Category extends Base {
+    title: ReactNode;
     description: string;
     tilte: string;
 }

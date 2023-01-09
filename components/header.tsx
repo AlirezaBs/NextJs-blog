@@ -3,7 +3,7 @@ import Image from "next/image"
 
 function Header() {
    return (
-      <header className="max-w-7xl mx-auto flex items-center justify-between space-x-2 font-bold px-10 py-5">
+      <header className="max-w-7xl mx-auto flex items-center justify-between space-x-2 font-bold px-5 md:px-10 py-5">
          <div className="flex items-center space-x-2">
             <Link href="/" />
             <Image src="/siteLogo.png" width={100} height={100} alt="logo" />

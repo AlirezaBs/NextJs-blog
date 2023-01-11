@@ -2,11 +2,31 @@ import { groq } from "next-sanity"
 import Image from "next/image"
 import { client } from "../../../../lib/sanity.client"
 import urlFor from "../../../../lib/urlFor"
+import { PortableText } from "@portabletext/react"
+import { RichTextComponents } from "../../../../components/RichTextComponents"
 
 type Props = {
    params: {
       slug: string
    }
+}
+
+export const revalidate = 60
+
+export async function generateStaticParams() {
+   const query = groq`*[_type=='post']
+   {
+      slug
+   }`
+
+   // @ts-ignore
+   const slugs: Post[] = await client.fetch(query)
+
+   const slugRoutes = slugs.map((slug) => slug.slug.current)
+
+   return slugRoutes.map(slug => ({
+      slug,
+   })) 
 }
 
 export default async function Post({ params: { slug } }: Props) {
@@ -18,7 +38,7 @@ export default async function Post({ params: { slug } }: Props) {
       categories[]->
     }
   `
-
+   // @ts-ignore
    const post: Post = await client.fetch(query, { slug })
 
    return (
@@ -69,13 +89,13 @@ export default async function Post({ params: { slug } }: Props) {
                         </div>
                      </div>
                   </div>
-                  <div className="flex flex-col md:flex-row mt-10 gap-5 items-center">
-                    <h2 className="italic">{post.description}</h2>
+                  <div className="flex flex-col md:flex-row mt-10 gap-5 items-center justify-between">
+                     <h2 className="italic">{post.description}</h2>
                      <div className="flex items-center justify-end mt-auto space-x-2">
                         {post.categories.map((category: any) => (
                            <p
                               key={category._id}
-                              className="bg-gray-800 text-white px-[1rem] py-[0.40rem] rounded-full text-sm font-semibold mt-4"
+                              className="bg-gray-800 text-white px-[1rem] py-[0.40rem] rounded-full text-sm font-semibold mt-4 text-center"
                            >
                               {category.title}
                            </p>
@@ -85,6 +105,10 @@ export default async function Post({ params: { slug } }: Props) {
                </section>
             </div>
          </section>
+
+         <div className="mt-10">
+            <PortableText value={post.body} components={RichTextComponents} />
+         </div>
       </article>
    )
 }
